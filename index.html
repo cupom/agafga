@@ -37,7 +37,6 @@
             height: 0;
             overflow: hidden;
             max-width: 100%;
-            background-color: transparent;
             margin-bottom: 20px;
         }
 
@@ -57,6 +56,20 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            opacity: 0; /* Inicia oculto */
+            transition: opacity 1s ease; /* Transição suave */
+        }
+
+        .thumbnail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('capa.jpg') no-repeat center center;
+            background-size: cover;
+            opacity: 1; /* Começa visível */
+            transition: opacity 1s ease; /* Transição suave */
         }
 
         .play-button {
@@ -73,6 +86,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            animation: oscillate 1s ease-in-out infinite; /* Animação de oscilação */
+        }
+
+        @keyframes oscillate {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
         }
 
         .play-button::before {
@@ -158,6 +178,8 @@
         <!-- Retângulo com vídeo de fundo -->
         <div class="rectangle-container">
             <div class="rectangle">
+                <!-- Thumbnail -->
+                <div class="thumbnail"></div>
                 <!-- Vídeo como fundo -->
                 <video id="backgroundVideo" muted loop playsinline class="background-video" poster="capa.jpg">
                     <source src="video1.mp4" type="video/mp4">
@@ -180,20 +202,25 @@
     <script>
         const playButton = document.getElementById('playButton');
         const video = document.getElementById('backgroundVideo');
+        const thumbnail = document.querySelector('.thumbnail');
 
         playButton.addEventListener('click', () => {
             if (video.paused) {
                 video.play();
+                video.style.opacity = '1'; // Faz o vídeo aparecer
+                thumbnail.style.opacity = '0'; // Esconde a thumbnail
                 playButton.classList.add('playing');
+                playButton.style.animation = 'none'; // Para a animação ao dar play
 
-                // Mostrar os retângulos por 1 segundo antes de esconder
+                // Esconde o botão após um tempo
                 setTimeout(() => {
-                    playButton.style.display = 'none'; // Esconde o botão após 1 segundo
+                    playButton.style.display = 'none'; // Esconde o botão após a animação
                 }, 1000);
             } else {
                 video.pause();
                 playButton.classList.remove('playing');
                 playButton.style.display = 'block'; // Mostra o botão se o vídeo for pausado
+                playButton.style.animation = 'oscillate 1s ease-in-out infinite'; // Retorna a animação ao pausar
             }
         });
     </script>
