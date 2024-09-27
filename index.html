@@ -123,6 +123,61 @@
             color: #aaaaaa;
         }
 
+        .selo-kiwify {
+            background-color: #1a1a1a; /* cor de fundo do selo */
+            border-radius: 10px 10px 0 0; /* bordas arredondadas */
+            padding: 10px;
+            width: 160px; /* ajuste a largura conforme necessário */
+            position: fixed; /* ou absolute, dependendo de onde você quer */
+            bottom: 0px; /* ajuste a posição inferior */
+            left: 10px; /* ajuste a posição esquerda */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* sombra */
+            z-index: 1000; /* garantir que o selo fique acima de outros elementos */
+            transition: height 0.3s ease; /* transição suave na altura */
+            cursor: pointer; /* cursor em forma de ponteiro */
+            text-align: left; /* Alinhamento à esquerda */
+        }
+
+        .conteudo-selo {
+            display: flex;
+            align-items: center;
+        }
+
+        .icone-cadeado {
+            font-size: 35px; /* ajuste o tamanho do ícone */
+            margin-right: 10px; /* espaço à direita do ícone */
+            color: #707070; /* cor do ícone */
+        }
+
+        .texto-selo {
+            color: #c0c0c0; /* cor do texto */
+        }
+
+        .titulo {
+            font-weight: bold; /* texto em negrito */
+        }
+
+        .subtitulo {
+            font-size: 0.8em; /* tamanho menor para o subtítulo */
+            color: #919191; /* cor mais suave */
+        }
+
+        /* Estilo da mensagem que aparece ao clicar */
+        .mensagem {
+            display: none; /* esconde a mensagem inicialmente */
+            margin-top: 15px; /* espaço acima da mensagem */
+            color: #ffffff; /* cor da mensagem */
+        }
+
+        .mensagem span {
+            font-size: 13px;
+        }
+
+        /* Classe para expandir o selo */
+        .expandido {
+            height: 140px; /* altura expandida */
+        }
+
         .container-prod-unique {
             display: none;
             max-width: 900px;
@@ -181,15 +236,15 @@
 
         video {
             width: 100%;
-            height: auto; /* Mantém a proporção ao definir a largura */
-            aspect-ratio: 16 / 9; /* Define a proporção de aspecto 16:9 */
+            height: auto;
+            aspect-ratio: 16 / 9;
         }
 
         .controls {
-            position: absolute; /* Permite que o botão fique sobre o vídeo */
-            top: 50%; /* Centraliza verticalmente */
-            left: 50%; /* Centraliza horizontalmente */
-            transform: translate(-50%, -50%); /* Ajusta a posição para o centro */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -206,25 +261,24 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 2; /* Para garantir que o botão fique acima do círculo */
-            transition: opacity 0.5s ease; /* Animação de desaparecimento */
-            animation: pulse-animation 1.5s infinite; /* Animação de pulsação */
+            z-index: 2;
+            transition: opacity 0.5s ease;
+            animation: pulse-animation 1.5s infinite;
         }
 
         .play-button.hidden {
-            opacity: 0; /* Esconde o botão */
-            pointer-events: none; /* Desabilita cliques quando oculto */
+            opacity: 0;
+            pointer-events: none;
         }
 
-        /* Círculo pulsante atrás do botão */
         .pulse {
             position: absolute;
             width: 60px;
             height: 0px;
             background-color: rgba(0, 0, 0, 0.5);
             border-radius: 50%;
-            animation: pulse-animation 1.5s infinite; /* Animação de pulsação */
-            z-index: 1; /* Para garantir que o círculo fique atrás do botão */
+            animation: pulse-animation 1.5s infinite;
+            z-index: 1;
         }
 
         @keyframes pulse-animation {
@@ -239,19 +293,17 @@
             }
         }
 
-        /* Ícone de Play - Triângulo maior */
         .play-button::before {
             content: '';
             position: absolute;
             width: 0;
             height: 0;
-            border-left: 20px solid white; /* Aumentado */
-            border-top: 12px solid transparent; /* Aumentado */
-            border-bottom: 12px solid transparent; /* Aumentado */
+            border-left: 20px solid white;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
             transition: all 0.3s ease;
         }
 
-        /* Ícones de Pause - Dois Retângulos com 7px */
         .play-button.playing::before {
             content: '';
             width: 7px;
@@ -261,7 +313,7 @@
             border-top: none;
             border-bottom: none;
             transition: all 0.3s ease;
-            left: 18px; /* Posição do primeiro retângulo */
+            left: 18px;
         }
 
         .play-button.playing::after {
@@ -270,8 +322,22 @@
             width: 7px;
             height: 24px;
             background-color: white;
-            right: 18px; /* Posição do segundo retângulo */
+            right: 18px;
             transition: all 0.3s ease;
+        }
+
+        /* Camada escurecida, começa invisível */
+        .dark-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            z-index: 1; /* Coloca atrás do texto */
+            pointer-events: none; /* Permite cliques através da camada */
+            transition: opacity 1s ease;
         }
 
         /* Estilo para a palavra "fim" */
@@ -281,66 +347,11 @@
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 48px;
-            color: #333;
-            opacity: 0; /* Começa invisível */
-            transition: opacity 1s ease; /* Animação de transição suave */
-            z-index: 3; /* Para garantir que o texto fique acima do vídeo */
-            pointer-events: none; /* Não permite cliques */
-        }
-
-        .selo-kiwify {
-            background-color: #1a1a1a; /* cor de fundo do selo */
-            border-radius: 10px 10px 0 0; /* bordas arredondadas */
-            padding: 10px;
-            width: 160px; /* ajuste a largura conforme necessário */
-            position: fixed; /* ou absolute, dependendo de onde você quer */
-            bottom: 0px; /* ajuste a posição inferior */
-            left: 10px; /* ajuste a posição esquerda */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* sombra */
-            z-index: 1000; /* garantir que o selo fique acima de outros elementos */
-            transition: height 0.3s ease; /* transição suave na altura */
-            cursor: pointer; /* cursor em forma de ponteiro */
-            text-align: left; /* Alinhamento à esquerda */
-        }
-
-        .conteudo-selo {
-            display: flex;
-            align-items: center;
-        }
-
-        .icone-cadeado {
-            font-size: 35px; /* ajuste o tamanho do ícone */
-            margin-right: 10px; /* espaço à direita do ícone */
-            color: #707070; /* cor do ícone */
-        }
-
-        .texto-selo {
-            color: #c0c0c0; /* cor do texto */
-        }
-
-        .titulo {
-            font-weight: bold; /* texto em negrito */
-        }
-
-        .subtitulo {
-            font-size: 0.8em; /* tamanho menor para o subtítulo */
-            color: #919191; /* cor mais suave */
-        }
-
-        /* Estilo da mensagem que aparece ao clicar */
-        .mensagem {
-            display: none; /* esconde a mensagem inicialmente */
-            margin-top: 15px; /* espaço acima da mensagem */
-            color: #ffffff; /* cor da mensagem */
-        }
-
-        .mensagem span {
-            font-size: 13px;
-        }
-
-        /* Classe para expandir o selo */
-        .expandido {
-            height: 140px; /* altura expandida */
+            color: #fff;
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 2;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -350,20 +361,21 @@
         <h1>O SEGREDO PARA<span class="break"> </span><span class="highlight">RESSUSCITAR</span> OS <span class="highlight">FIOS!</span></h1>
 
         <div class="containe">
-            <video id="video" poster="capa.jpg"> <!-- Adicione a imagem da thumbnail aqui -->
+            <video id="video" poster="capa.jpg">
                 <source src="video1.mp4" type="video/mp4">
                 Seu navegador não suporta a tag de vídeo.
             </video>
-    
+
             <div class="controls">
-                <div class="pulse"></div> <!-- Círculo pulsante -->
+                <div class="pulse"></div>
                 <button class="play-button" id="playPauseBtn" onclick="togglePlayPause()"></button>
             </div>
-    
-            <div class="end-message" id="endMessage">Fim</div> <!-- Mensagem de fim -->
+
+            <div class="end-message" id="endMessage">Fim</div>
+            <div class="dark-overlay" id="darkOverlay"></div> <!-- Camada escurecida -->
         </div>
 
-        <div class="payment-method">
+        <div class="payment-method"></div>
             <div class="payment-icons">
                 <i class="fas fa-credit-card payment-icon" data-tooltip="Cartão"></i>
                 <i class="fas fa-file-invoice payment-icon" data-tooltip="Boleto"></i>
@@ -414,6 +426,74 @@
             </div>
         </div>
 
+        <script>
+            var video = document.getElementById('video');
+            var playPauseBtn = document.getElementById('playPauseBtn');
+            var endMessage = document.getElementById('endMessage');
+            var darkOverlay = document.getElementById('darkOverlay');
+            var containerProdUnique = document.querySelector('.container-prod-unique');
+    
+            // Função para verificar e mostrar o botão de compra se o vídeo já passou dos 30 segundos
+            function checkVideoProgress() {
+                if (localStorage.getItem('videoWatched') === 'true') {
+                    containerProdUnique.style.display = 'block';
+                }
+            }
+    
+            // Função para salvar no LocalStorage
+            function saveVideoProgress() {
+                localStorage.setItem('videoWatched', 'true');
+            }
+    
+            // Verifica o progresso ao carregar a página
+            window.onload = checkVideoProgress;
+    
+            function togglePlayPause() {
+                if (video.paused) {
+                    video.play();
+                    playPauseBtn.classList.add('playing');
+                    setTimeout(() => {
+                        playPauseBtn.classList.add('hidden');
+                    }, 300);
+                } else {
+                    video.pause();
+                    playPauseBtn.classList.remove('playing');
+                    playPauseBtn.classList.remove('hidden');
+                }
+            }
+    
+            // Pause o vídeo e exiba o botão de play se o usuário sair da aba
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'hidden') {
+                    video.pause();
+                    playPauseBtn.classList.remove('hidden');
+                    playPauseBtn.classList.remove('playing');
+                }
+            });
+    
+            video.addEventListener('timeupdate', function() {
+                if (video.currentTime >= 30) {
+                    containerProdUnique.style.display = 'block';
+                    saveVideoProgress(); // Salva a informação no LocalStorage
+                }
+            });
+    
+            video.addEventListener('pause', function() {
+                playPauseBtn.classList.remove('hidden');
+                playPauseBtn.classList.remove('playing');
+            });
+    
+            video.addEventListener('ended', function() {
+                video.pause();
+                video.currentTime = video.duration;
+                playPauseBtn.style.display = 'none';
+    
+                // Mostra a palavra "Fim" e a camada escurecida
+                endMessage.style.opacity = 1;
+                darkOverlay.style.opacity = 1;
+            });
+        </script>
+
     <script>
         // Seleciona o selo e a mensagem
         const seloKiwify = document.getElementById('seloKiwify');
@@ -442,51 +522,6 @@
                 // Define um timeout para fechar o selo após 10 segundos
                 timeoutId = setTimeout(fecharSelo, 7000); // 10000ms = 10s
             }
-        });
-    </script>
-
-    <script>
-        var video = document.getElementById('video');
-        var playPauseBtn = document.getElementById('playPauseBtn');
-        var endMessage = document.getElementById('endMessage');
-        var containerProdUnique = document.querySelector('.container-prod-unique');
-    
-        function togglePlayPause() {
-            if (video.paused) {
-                video.play();
-                playPauseBtn.classList.add('playing');
-                // Espera 300ms para o ícone de play mudar para pause antes de esconder
-                setTimeout(() => {
-                    playPauseBtn.classList.add('hidden');
-                }, 300); // Tempo correspondente...
-            } else {
-                video.pause();
-                playPauseBtn.classList.remove('playing');
-                playPauseBtn.classList.remove('hidden');
-            }
-        }
-    
-        // Listener para verificar o tempo do vídeo
-        video.addEventListener('timeupdate', function() {
-            if (video.currentTime >= 30) {
-                containerProdUnique.style.display = 'block'; // Oculta o container ao atingir 30s
-            }
-        });
-
-        // Mostra o botão novamente se o vídeo for pausado
-        video.addEventListener('pause', function() {
-            playPauseBtn.classList.remove('hidden');
-            playPauseBtn.classList.remove('playing'); // Reseta para o ícone de play
-        });
-
-        // Quando o vídeo termina, ele para no último frame e não permite recomeçar
-        video.addEventListener('ended', function() {
-            video.pause(); // Garante que o vídeo está pausado
-            video.currentTime = video.duration; // Muda para o último frame
-            playPauseBtn.style.display = 'none'; // Remove o botão de play
-            
-            // Apresenta a mensagem "fim"
-            endMessage.style.opacity = '1'; // Torna a mensagem visível
         });
     </script>
 
